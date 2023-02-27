@@ -16,7 +16,10 @@ export class ClickOutsideDirective {
             return;
         }
 
-        const clickedInside = this._elementRef.nativeElement.contains(targetElement);
+	// make this work when used inside a shadowRoot
+	let fixedTarget = event.componsedPath()[2];
+
+        const clickedInside = this._elementRef.nativeElement.contains(fixedTarget);
         if (!clickedInside) {
             this.clickOutside.emit(event);
         }
